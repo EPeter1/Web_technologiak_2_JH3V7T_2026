@@ -1,0 +1,25 @@
+<div class="login-container">
+
+    <h2>Login</h2>
+
+    <input
+        type="text"
+        placeholder="Username"
+        [(ngModel)]="userName"
+        (input)="onInputChange()"
+    />
+
+    <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="password"
+        (input)="onInputChange()"
+    />
+
+    <button (click)="login()">Login</button>
+
+    <p *ngIf="errorMessage() !== ''" style="color:red;">
+        {{ errorMessage() }}
+    </p>
+
+</div>

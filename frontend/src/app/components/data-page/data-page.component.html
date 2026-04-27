@@ -1,0 +1,13 @@
+<h2>Data Management</h2>
+
+<select [value]="selectedView" (change)="onChange($event)">
+    <option value="achievements">Achievements</option>
+    <option value="users">Users</option>
+    <option value="userAchievements">User achievements</option>
+</select>
+
+<hr />
+
+<app-list-achievements *ngIf="selectedView === 'achievements'"></app-list-achievements>
+<app-list-users *ngIf="selectedView === 'users'"></app-list-users>
+<app-list-user-achievements *ngIf="selectedView === 'userAchievements'"></app-list-user-achievements>

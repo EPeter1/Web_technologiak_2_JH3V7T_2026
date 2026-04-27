@@ -1,0 +1,23 @@
+<table>
+    <thead>
+        <tr>
+            <th *ngFor="let column of columns">
+                {{ column.label }}
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let item of data">
+            <td *ngFor="let column of columns">
+                {{ column.value(item) }}
+            </td>
+            <td>
+                <button (click)="delete.emit(item)">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

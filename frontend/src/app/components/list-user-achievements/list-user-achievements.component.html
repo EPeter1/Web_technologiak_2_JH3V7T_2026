@@ -1,0 +1,11 @@
+<input 
+    [ngModel]="''"
+    (ngModelChange)="searchTerm$.next($event)"
+    placeholder="Search ..." 
+/>
+
+<app-data-table
+    [data]="(filteredItems$ | async) ?? []"
+    [columns]="columns"
+    (delete)="deleteItem($event)">
+</app-data-table>

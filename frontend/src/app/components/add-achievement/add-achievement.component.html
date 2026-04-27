@@ -1,0 +1,45 @@
+<div class="container">
+    <mat-card>
+        <h2>Add Achievement</h2>
+
+        <form [formGroup]="achievementForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="fill">
+                <mat-label>Game</mat-label>
+                <input matInput formControlName="game">
+                <mat-error *ngIf="achievementForm.get('game')?.touched && achievementForm.get('game')?.invalid">
+                    Required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Achievement name</mat-label>
+                <input matInput formControlName="name">
+                <mat-error *ngIf="achievementForm.get('name')?.touched && achievementForm.get('name')?.hasError('required')">
+                    Name is required
+                </mat-error>
+
+                <mat-error *ngIf="achievementForm.get('name')?.hasError('maxlength')">
+                    Max 50 characters
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Condition</mat-label>
+                <textarea matInput formControlName="condition"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Difficulty</mat-label>
+                <mat-select formControlName="difficulty">
+                <mat-option *ngFor="let d of difficulties" [value]="d">
+                    {{ d }}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit">
+                Submit
+            </button>
+        </form>
+    </mat-card>
+</div>
