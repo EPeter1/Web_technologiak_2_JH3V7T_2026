@@ -3,20 +3,20 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataTableComponent } from './data-table.component';
 
 describe('DataTableComponent', () => {
-  let component: DataTableComponent;
-  let fixture: ComponentFixture<DataTableComponent>;
+    let component: DataTableComponent<any>;
+    let fixture: ComponentFixture<DataTableComponent<any>>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [DataTableComponent],
-    }).compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [DataTableComponent],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(DataTableComponent);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
+        fixture = TestBed.createComponent(DataTableComponent);
+        component = fixture.componentInstance;
+        await fixture.whenStable();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

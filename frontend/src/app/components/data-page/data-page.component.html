@@ -8,6 +8,14 @@
 
 <hr />
 
-<app-list-achievements *ngIf="selectedView === 'achievements'"></app-list-achievements>
-<app-list-users *ngIf="selectedView === 'users'"></app-list-users>
-<app-list-user-achievements *ngIf="selectedView === 'userAchievements'"></app-list-user-achievements>
+@switch (selectedView) {
+    @case ('achievements') {
+        <app-list-achievements></app-list-achievements>
+    }
+    @case ('users') {
+        <app-list-users></app-list-users>
+    }
+    @case ('userAchievements') {
+        <app-list-user-achievements></app-list-user-achievements>
+    }
+}

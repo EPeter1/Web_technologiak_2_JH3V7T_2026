@@ -1,8 +1,12 @@
 <nav>
-    <a routerLink="/data" *ngIf="authService.isLoggedIn">Database</a>
-    <a routerLink="/add-achievement" *ngIf="authService.isLoggedIn">Add Achievement</a>
-    <a routerLink="/login" *ngIf="!authService.isLoggedIn">Log in</a>
-    <button *ngIf="authService.isLoggedIn" (click)="authService.logout()">Log out</button>
+    @if (authService.isLoggedIn) {
+        <a routerLink="/data">Database</a>
+        <a routerLink="/add-achievement">Add Achievement</a>
+        <button (click)="authService.logout()">Log Out</button>
+    }
+    @else {
+        <a routerLink="/login">Log In</a>
+    }
 </nav>
 
 <router-outlet></router-outlet>

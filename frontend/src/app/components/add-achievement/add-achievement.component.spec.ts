@@ -3,20 +3,20 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddAchievementComponent } from './add-achievement.component';
 
 describe('AddAchievementComponent', () => {
-  let component: AddAchievementComponent;
-  let fixture: ComponentFixture<AddAchievementComponent>;
+    let component: AddAchievementComponent;
+    let fixture: ComponentFixture<AddAchievementComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AddAchievementComponent],
-    }).compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [AddAchievementComponent],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(AddAchievementComponent);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
+        fixture = TestBed.createComponent(AddAchievementComponent);
+        component = fixture.componentInstance;
+        await fixture.whenStable();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 type Column<Item> = {
     label: string;
@@ -9,7 +8,7 @@ type Column<Item> = {
 @Component({
     selector: 'app-data-table',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './data-table.component.html',
     styleUrls: ['./data-table.component.css']
 })

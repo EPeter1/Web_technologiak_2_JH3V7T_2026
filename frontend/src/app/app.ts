@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
 import { AuthService } from './services/auth.service';
 
@@ -9,8 +8,7 @@ import { AuthService } from './services/auth.service';
     standalone: true,
     imports: [
         RouterOutlet,
-        RouterLink,
-        CommonModule
+        RouterLink
     ],
     templateUrl: './app.html',
     styleUrls: ['./app.css']

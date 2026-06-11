@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -17,7 +16,6 @@ import { AchievementService } from '../../services/achievement.service';
     selector: 'app-add-achievement',
     standalone: true,
     imports: [
-        CommonModule,
         ReactiveFormsModule,
         MatButtonModule,
         MatCardModule,
@@ -31,7 +29,6 @@ import { AchievementService } from '../../services/achievement.service';
 })
 
 export class AddAchievementComponent {
-    
     achievementForm: FormGroup;
     difficulties = [1, 2, 3, 4];
 
@@ -84,9 +81,7 @@ export class AddAchievementComponent {
             duration: 3000,
             horizontalPosition: 'center',
             verticalPosition: 'bottom',
-            panelClass: type === 'success' 
-                ? ['snackbar-success'] 
-                : ['snackbar-error']
+            panelClass: type === 'success' ? ['snackbar-success'] : ['snackbar-error']
         });
     }
 }

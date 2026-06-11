@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,7 +12,6 @@ type ViewType = 'achievements' | 'users' | 'userAchievements';
     selector: 'app-data-page',
     standalone: true,
     imports: [
-        CommonModule,
         FormsModule,
         ListUsersComponent,
         ListAchievementsComponent,
