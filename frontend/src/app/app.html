@@ -1,7 +1,7 @@
 <nav>
     @if (authService.isLoggedIn) {
         <a routerLink="/data">Database</a>
-        <a routerLink="/add-achievement">Add Achievement</a>
+        <a routerLink="/add">Add Entry</a>
         <button (click)="authService.logout()">Log Out</button>
     }
     @else {

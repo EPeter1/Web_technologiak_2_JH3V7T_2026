@@ -7,10 +7,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AchievementService } from '../../services/achievement.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'app-add-achievement',
@@ -21,11 +20,10 @@ import { AchievementService } from '../../services/achievement.service';
         MatCardModule,
         MatInputModule,
         MatFormFieldModule,
-        MatSelectModule,
-        MatSnackBarModule
+        MatSelectModule
     ],
     templateUrl: './add-achievement.component.html',
-    styleUrls: ['./add-achievement.component.css']
+    styleUrls: ['../add-styles.css']
 })
 
 export class AddAchievementComponent {
@@ -35,7 +33,7 @@ export class AddAchievementComponent {
     constructor(
         private fb: FormBuilder,
         private service: AchievementService,
-        private snackBar: MatSnackBar
+        private notification: NotificationService
     )
     {
         this.achievementForm = this.fb.group({
@@ -57,31 +55,22 @@ export class AddAchievementComponent {
             const exists = list.some(a =>
                 a.game === newAchievement.game &&
                 a.name === newAchievement.name
-        );
+            );
 
             if (exists) {
-                this.showSnack('Achievement already exists', 'error');
+                this.notification.showSnack('Achievement already exists', 'error');
                 return;
             }
 
             this.service.createAchievement(newAchievement).subscribe({
                 next: () => {
                     this.achievementForm.reset();
-                    this.showSnack('Achievement added successfully', 'success');
+                    this.notification.showSnack('Achievement added successfully', 'success');
                 },
                 error: (error) => {
-                    this.showSnack('Error while saving: ' + error.message, 'error');
+                    this.notification.showSnack('Error while saving: ' + error.message, 'error');
                 }
             });
-        });
-    }
-
-    private showSnack(message: string, type: 'success' | 'error') {
-        this.snackBar.open(message, 'OK', {
-            duration: 3000,
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom',
-            panelClass: type === 'success' ? ['snackbar-success'] : ['snackbar-error']
         });
     }
 }

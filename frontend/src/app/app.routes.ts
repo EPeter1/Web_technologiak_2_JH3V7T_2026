@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { authGuard } from './auth/auth.guard';
-import { AddAchievementComponent } from './components/add-achievement/add-achievement.component';
+import { AddPageComponent } from './components/add-page/add-page.component';
 import { DataPageComponent } from './components/data-page/data-page.component';
 import { LoginComponent } from './components/login/login.component';
 
@@ -12,13 +12,16 @@ export const routes: Routes = [
         path: 'data',
         canActivate: [authGuard],
         children: [
-        { path: '', component: DataPageComponent },
-        { path: ':type', component: DataPageComponent }
+            { path: '', component: DataPageComponent },
+            { path: ':type', component: DataPageComponent }
         ]
     },
     {
-        path: 'add-achievement',
-        component: AddAchievementComponent,
-        canActivate: [authGuard]
+        path: 'add',
+        canActivate: [authGuard],
+        children: [
+            { path: '', component: AddPageComponent },
+            { path: ':type', component: AddPageComponent }
+        ]
     }
 ];
