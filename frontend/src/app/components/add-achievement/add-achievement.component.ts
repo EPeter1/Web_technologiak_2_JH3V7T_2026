@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
+import { createAchievementForm, DIFFICULTIES } from '../achievement-form.config';
+import { DataFormComponent } from '../data-form/data-form.component';
+import { ManageDataDirective } from '../../directives/manage-data.directive';
+import { Achievement } from '../../models/achievement';
 import { AchievementService } from '../../services/achievement.service';
 import { NotificationService } from '../../services/notification.service';
 
@@ -16,59 +17,46 @@ import { NotificationService } from '../../services/notification.service';
     standalone: true,
     imports: [
         ReactiveFormsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatInputModule,
         MatFormFieldModule,
-        MatSelectModule
+        MatInputModule,
+        MatSelectModule,
+        DataFormComponent
     ],
     templateUrl: './add-achievement.component.html',
     styleUrls: ['../add-styles.css']
 })
 
-export class AddAchievementComponent {
-    achievementForm: FormGroup;
-    difficulties = [1, 2, 3, 4];
+export class AddAchievementComponent extends ManageDataDirective {
+    private achievementService = inject(AchievementService);
+    private notificationService = inject(NotificationService);
 
-    constructor(
-        private fb: FormBuilder,
-        private service: AchievementService,
-        private notification: NotificationService
-    )
-    {
-        this.achievementForm = this.fb.group({
-            game: ['', Validators.required],
-            name: ['', [Validators.required, Validators.maxLength(50)]],
-            condition: ['', Validators.required],
-            difficulty: [1, Validators.required]
-        });
-    }
+    title = 'Add Achievement';
+    submitButtonText = 'Add';
+    dataForm = createAchievementForm();
 
-    onSubmit() {
-        if (this.achievementForm.invalid) {
-            return;
-        }
+    difficulties = DIFFICULTIES;
 
-        const newAchievement = this.achievementForm.value;
+    executeSubmit(): void {
+        const newAchievement = this.dataForm.getRawValue() as Achievement;
 
-        this.service.getAchievements().subscribe(list => {
-            const exists = list.some(a =>
-                a.game === newAchievement.game &&
-                a.name === newAchievement.name
+        this.achievementService.getAchievements().subscribe(list => {
+            const exists = list.some(achievement =>
+                achievement.game === newAchievement.game &&
+                achievement.name === newAchievement.name
             );
 
             if (exists) {
-                this.notification.showSnack('Achievement already exists', 'error');
+                this.notificationService.showSnack('Achievement already exists', 'error');
                 return;
             }
 
-            this.service.createAchievement(newAchievement).subscribe({
+            this.achievementService.createAchievement(newAchievement).subscribe({
                 next: () => {
-                    this.achievementForm.reset();
-                    this.notification.showSnack('Achievement added successfully', 'success');
+                    this.dataForm.reset({ difficulty: 1 });
+                    this.notificationService.showSnack('Achievement added successfully', 'success');
                 },
                 error: (error) => {
-                    this.notification.showSnack('Error while saving: ' + error.message, 'error');
+                    this.notificationService.showSnack('Error while saving: ' + error.message, 'error');
                 }
             });
         });

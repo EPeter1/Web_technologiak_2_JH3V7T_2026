@@ -1,0 +1,13 @@
+<div class="form-container">
+    <mat-card>
+        <h2>{{ title }}</h2>
+
+        <form [formGroup]="formGroup" (ngSubmit)="formSubmit.emit()">
+            <ng-content></ng-content>
+
+            <button mat-raised-button class="submit-button" type="submit" color="primary" [disabled]="formGroup.invalid">
+                {{ submitButtonText }}
+            </button>
+        </form>
+    </mat-card>
+</div>

@@ -17,5 +17,6 @@ export class DataTableComponent<Item> {
     @Input() data: Item[] = [];
     @Input() columns: Column<Item>[] = [];
 
+    @Output() edit = new EventEmitter<Item>();
     @Output() delete = new EventEmitter<Item>();
 }

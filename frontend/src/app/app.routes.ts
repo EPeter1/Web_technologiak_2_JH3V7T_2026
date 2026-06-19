@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './auth/auth.guard';
 import { AddPageComponent } from './components/add-page/add-page.component';
 import { DataPageComponent } from './components/data-page/data-page.component';
+import { EditPageComponent } from './components/edit-page/edit-page.component';
 import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
@@ -22,6 +23,15 @@ export const routes: Routes = [
         children: [
             { path: '', component: AddPageComponent },
             { path: ':type', component: AddPageComponent }
+        ]
+    },
+    {
+        path: 'edit',
+        canActivate: [authGuard],
+        children: [
+            { path: '', component: EditPageComponent },
+            { path: ':type', component: EditPageComponent },
+            { path: ':type/:id', component: EditPageComponent }
         ]
     }
 ];

@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Observable } from 'rxjs';
+
+import { createUserAchievementForm, PLATFORMS } from '../user-achievement-form.config';
+import { DataFormComponent } from '../data-form/data-form.component';
+import { ManageDataDirective } from '../../directives/manage-data.directive';
 import { Achievement } from '../../models/achievement';
 import { User } from '../../models/user';
 import { AchievementService } from '../../services/achievement.service';
+import { NotificationService } from '../../services/notification.service';
 import { UserAchievementService } from '../../services/user-achievement.service';
 import { UserService } from '../../services/user.service';
-import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'app-add-user-achievement',
@@ -24,91 +25,79 @@ import { NotificationService } from '../../services/notification.service';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatSelectModule,
+        MatNativeDateModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        DataFormComponent
     ],
     templateUrl: './add-user-achievement.component.html',
     styleUrls: ['../add-styles.css']
 })
 
-export class AddUserAchievementComponent implements OnInit {
-    userAchievementForm: FormGroup;
-    platforms = ['PC', 'Playstation', 'Xbox', 'Switch'];
+export class AddUserAchievementComponent extends ManageDataDirective implements OnInit {
+    private achievementService = inject(AchievementService);
+    private notificationService = inject(NotificationService);
+    private userAchievementService = inject(UserAchievementService);
+    private userService = inject(UserService);
+
+    title = 'Add User Achievement';
+    submitButtonText = 'Add';
+    dataForm = createUserAchievementForm();
+
+    platforms = PLATFORMS;
 
     users$!: Observable<User[]>;
     achievements$!: Observable<Achievement[]>;
-
-    constructor(
-        private fb: FormBuilder,
-        private userService: UserService,
-        private achievementService: AchievementService,
-        private userAchievementService: UserAchievementService,
-        private notification: NotificationService
-    )
-    {
-        this.userAchievementForm = this.fb.group({
-            userId: ['', Validators.required],
-            achievementId: ['', Validators.required],
-            platform: ['PC', Validators.required],
-            unlockedDate: [new Date(), Validators.required],
-            unlockedTime: ['12:00', Validators.required]
-        });
-    }
 
     ngOnInit(): void {
         this.users$ = this.userService.getUsers();
         this.achievements$ = this.achievementService.getAchievements();
     }
 
-    onSubmit() {
-        if (this.userAchievementForm.invalid) {
-            return;
-        }
-
-        const FormValues = this.userAchievementForm.value;
+    executeSubmit(): void {
+        const formValues = this.dataForm.getRawValue();
 
         this.userAchievementService.getUserAchievements().subscribe(list => {
-            const exists = list.some(ua =>
-                ua.userId?._id === FormValues.userId &&
-                ua.achievementId?._id === FormValues.achievementId
+            const exists = list.some(userAchievement =>
+                userAchievement.userId?._id === formValues.userId &&
+                userAchievement.achievementId?._id === formValues.achievementId
             );
 
             if (exists) {
-                this.notification.showSnack('This user already has this achievement unlocked', 'error');
+                this.notificationService.showSnack('This user already has this achievement unlocked', 'error');
                 return;
             }
 
-            const date: Date = new Date(FormValues.unlockedDate);
-            const timeStr: string = FormValues.unlockedTime;
-            const [hours, minutes] = timeStr.split(':').map(Number);
+            let date: Date | undefined = undefined;
 
-            date.setHours(hours);
-            date.setMinutes(minutes);
-            date.setSeconds(0);
+            if (formValues.unlockedDate) {
+                date = new Date(formValues.unlockedDate);
+                const timeString = formValues.unlockedTime || '00:00:00';
+                const [hours, minutes, seconds] = timeString.split(':').map(Number);
 
-            const newUserAchievement = {
-                userId: FormValues.userId,
-                achievementId: FormValues.achievementId,
-                platform: FormValues.platform,
+                date.setHours(hours, minutes, seconds || 0, 0);
+            }
+
+            const newUserAchievement: any = {
+                userId: formValues.userId,
+                achievementId: formValues.achievementId,
+                platform: formValues.platform,
                 unlockedAt: date
             };
 
             this.userAchievementService.createUserAchievement(newUserAchievement).subscribe({
                 next: () => {
-                    this.userAchievementForm.reset({
+                    this.dataForm.reset({
                         platform: 'PC', 
-                        unlockedDate: new Date(),
-                        unlockedTime: '12:00' 
+                        unlockedDate: null,
+                        unlockedTime: ''
                     });
-                    this.notification.showSnack('User achievement added successfully', 'success');
+                    this.notificationService.showSnack('User achievement added successfully', 'success');
                 },
                 error: (error) => {
-                    this.notification.showSnack('Error while saving: ' + error.message, 'error');
+                    this.notificationService.showSnack('Error while saving: ' + error.message, 'error');
                 }
             });
         });

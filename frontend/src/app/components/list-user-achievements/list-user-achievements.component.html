@@ -7,5 +7,6 @@
 <app-data-table
     [data]="(filteredItems$ | async) ?? []"
     [columns]="columns"
+    (edit)="editItem($event)"
     (delete)="deleteItem($event)">
 </app-data-table>

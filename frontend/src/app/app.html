@@ -2,6 +2,7 @@
     @if (authService.isLoggedIn) {
         <a routerLink="/data">Database</a>
         <a routerLink="/add">Add Entry</a>
+        <a routerLink="/edit">Edit Entry</a>
         <button (click)="authService.logout()">Log Out</button>
     }
     @else {

@@ -26,6 +26,7 @@ type ViewType = 'achievements' | 'userAchievements';
 
 export class AddPageComponent implements OnInit {
     selectedView: ViewType = 'achievements';
+    id: string | null = null;
 
     constructor(
         private route: ActivatedRoute,
@@ -35,6 +36,7 @@ export class AddPageComponent implements OnInit {
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {
             const type = params.get('type');
+            this.id = params.get('id');
             this.selectedView = (type as ViewType) || 'achievements';
         });
     }

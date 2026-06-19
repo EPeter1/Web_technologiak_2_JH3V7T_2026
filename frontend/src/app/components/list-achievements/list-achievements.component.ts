@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { Achievement } from '../../models/achievement';
@@ -23,6 +23,8 @@ import { ListDataComponent } from '../list-data/list-data.component';
 })
 
 export class ListAchievementsComponent extends ListDataComponent<Achievement> {
+    private router = inject(Router);
+
     columns = [
         { label: 'Game', value: (a: Achievement) => a.game },
         { label: 'Achievement', value: (a: Achievement) => a.name },
@@ -36,6 +38,12 @@ export class ListAchievementsComponent extends ListDataComponent<Achievement> {
 
     loadItems(): Observable<Achievement[]> {
         return this.achievementService.getAchievements();
+    }
+
+    editItem(achievement: Achievement): void {
+        if (achievement._id) {
+            this.router.navigate(['/edit', 'achievements', achievement._id]);
+        }
     }
 
     deleteItem(achievement: Achievement): void {

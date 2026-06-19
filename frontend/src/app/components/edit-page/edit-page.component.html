@@ -1,0 +1,69 @@
+<h2>Edit Existing Entry</h2>
+
+<mat-form-field appearance="fill">
+    <mat-label>Select type</mat-label>
+    <mat-select [value]="selectedView" (selectionChange)="onTypeChange($event.value)">
+        <mat-option value="achievements">Achievement</mat-option>
+        <mat-option value="userAchievements">User Achievement</mat-option>
+    </mat-select>
+</mat-form-field>
+
+<hr />
+
+@switch (selectedView) {
+    @case ('achievements') {
+        @if (!selectedId) {
+            <div class="selection-container">
+                <h3>Select an Achievement to Edit</h3>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Search achievement ...</mat-label>
+                    <input matInput [(ngModel)]="searchQuery" (ngModelChange)="filterItems()"/>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Choose from the list</mat-label>
+                    <mat-select (selectionChange)="onItemSelect($event.value)">
+                        @for (achievement of filteredAchievements; track achievement._id) {
+                            <mat-option [value]="achievement._id">
+                                [{{ achievement.game }}] - {{ achievement.name }}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        }
+        @else {
+            <button mat-button (click)="onTypeChange('achievements')">Change Selection</button>
+            <app-edit-achievement [editId]="selectedId"></app-edit-achievement>
+        }
+    }
+
+    @case ('userAchievements') {
+        @if (!selectedId) {
+            <div class="selection-container">
+                <h3>Select a User Achievement to Edit</h3>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Search user, game or achievement ...</mat-label>
+                    <input matInput [(ngModel)]="searchQuery" (ngModelChange)="filterItems()"/>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Choose from the list</mat-label>
+                    <mat-select (selectionChange)="onItemSelect($event.value)">
+                        @for (userAchievement of filteredUserAchievements; track userAchievement._id) {
+                            <mat-option [value]="userAchievement._id">
+                                {{ userAchievement.userId.userName }}: [{{ userAchievement.achievementId.game }}] - {{ userAchievement.achievementId.name }}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        }
+        @else {
+            <button mat-button (click)="onTypeChange('userAchievements')">Change Selection</button>
+            <app-edit-user-achievement [editId]="selectedId"></app-edit-user-achievement>
+        }
+    }
+}
