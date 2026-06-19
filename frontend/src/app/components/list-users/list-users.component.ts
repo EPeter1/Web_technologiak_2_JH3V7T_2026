@@ -1,40 +1,40 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+
 import { Observable } from 'rxjs';
 
+import { DataTableComponent } from '../data-table/data-table.component';
+import { ListDataDirective } from '../../directives/list-data/list-data.directive';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
-import { DataTableComponent } from '../data-table/data-table.component';
-import { ListDataComponent } from '../list-data/list-data.component';
 
 @Component({
     selector: 'app-list-users',
     standalone: true,
     imports: [
-        CommonModule,
+        AsyncPipe,
         FormsModule,
-        RouterModule,
         DataTableComponent
     ],
-    templateUrl: './list-users.component.html',
+    templateUrl: '../list-achievements/list-achievements.component.html',
     styleUrls: ['./list-users.component.css']
 })
 
-export class ListUsersComponent extends ListDataComponent<User> {
-    columns = [
-        { label: 'Username', value: (u: User) => u.userName },
-        { label: 'Email', value: (u: User) => u.email },
-        { label: 'Role', value: (u: User) => u.role }
-    ];
+export class ListUsersComponent extends ListDataDirective<User> {
+    private userService = inject(UserService);
 
-    constructor(private userService: UserService) {
-        super();
-    }
+    columns = [
+        { label: 'Username', value: (user: User) => user.userName },
+        { label: 'Email', value: (user: User) => user.email },
+        { label: 'Role', value: (user: User) => user.role }
+    ];
 
     loadItems(): Observable<User[]> {
         return this.userService.getUsers();
+    }
+
+    editItem(user: User): void {
     }
 
     deleteItem(user: User): void {

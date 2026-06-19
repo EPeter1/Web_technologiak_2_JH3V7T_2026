@@ -1,44 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ListAchievementsComponent } from '../list-achievements/list-achievements.component';
-import { ListUsersComponent } from '../list-users/list-users.component';
-import { ListUserAchievementsComponent } from '../list-user-achievements/list-user-achievements.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
-type ViewType = 'achievements' | 'users' | 'userAchievements';
+import { ListAchievementsComponent } from '../list-achievements/list-achievements.component';
+import { ListUserAchievementsComponent } from '../list-user-achievements/list-user-achievements.component';
+import { ListUsersComponent } from '../list-users/list-users.component';
+
+type ViewType = 'achievements' | 'userAchievements' | 'users';
 
 @Component({
     selector: 'app-data-page',
     standalone: true,
     imports: [
         FormsModule,
-        ListUsersComponent,
+        MatFormFieldModule,
+        MatSelectModule,
         ListAchievementsComponent,
-        ListUserAchievementsComponent
+        ListUserAchievementsComponent,
+        ListUsersComponent
     ],
     templateUrl: './data-page.component.html',
     styleUrls: ['./data-page.component.css']
 })
 
-export class DataPageComponent {
+export class DataPageComponent implements OnInit {
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
+
     selectedView: ViewType = 'achievements';
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router
-    ) {}
-
     ngOnInit(): void {
-
-        this.route.paramMap.subscribe(params => {
-            const type = params.get('type');
+        this.route.paramMap.subscribe(parameters => {
+            const type = parameters.get('type');
             this.selectedView = (type as ViewType) || 'achievements';
         });
     }
 
-    onChange(event: Event): void {
-        const value = (event.target as HTMLSelectElement).value;
+    onTypeChange(value: string): void {
         this.router.navigate(['/data', value]);
     }
 }

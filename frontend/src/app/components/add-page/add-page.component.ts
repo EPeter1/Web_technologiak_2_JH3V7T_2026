@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -25,23 +25,22 @@ type ViewType = 'achievements' | 'userAchievements';
 })
 
 export class AddPageComponent implements OnInit {
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
+
     selectedView: ViewType = 'achievements';
     id: string | null = null;
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router
-    ) {}
-
     ngOnInit(): void {
-        this.route.paramMap.subscribe(params => {
-            const type = params.get('type');
-            this.id = params.get('id');
+        this.route.paramMap.subscribe(parameters => {
+            const type = parameters.get('type');
+
+            this.id = parameters.get('id');
             this.selectedView = (type as ViewType) || 'achievements';
         });
     }
 
-    onChange(value: string): void {
+    onTypeChange(value: string): void {
         this.router.navigate(['/add', value]);
     }
 }

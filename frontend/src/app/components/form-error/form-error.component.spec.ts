@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListDataComponent } from './list-data.component';
+import { FormErrorComponent } from './form-error.component';
 
-describe('ListDataComponent', () => {
-    let component: ListDataComponent<any>;
-    let fixture: ComponentFixture<ListDataComponent<any>>;
+describe('FormErrorComponent', () => {
+    let component: FormErrorComponent;
+    let fixture: ComponentFixture<FormErrorComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ListDataComponent],
+            imports: [FormErrorComponent],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(ListDataComponent);
+        fixture = TestBed.createComponent(FormErrorComponent);
         component = fixture.componentInstance;
         await fixture.whenStable();
     });

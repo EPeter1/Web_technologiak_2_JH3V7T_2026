@@ -1,40 +1,37 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs';
 
+import { DataTableComponent } from '../data-table/data-table.component';
+import { ListDataDirective } from '../../directives/list-data/list-data.directive';
 import { Achievement } from '../../models/achievement';
 import { AchievementService } from '../../services/achievement.service';
-import { DataTableComponent } from '../data-table/data-table.component';
-import { ListDataComponent } from '../list-data/list-data.component';
 
 @Component({
     selector: 'app-list-achievements',
     standalone: true,
     imports: [
-        CommonModule,
+        AsyncPipe,
         FormsModule,
-        RouterModule,
-        DataTableComponent,
+        DataTableComponent
     ],
     templateUrl: './list-achievements.component.html',
     styleUrls: ['./list-achievements.component.css']
 })
 
-export class ListAchievementsComponent extends ListDataComponent<Achievement> {
+export class ListAchievementsComponent extends ListDataDirective<Achievement> {
     private router = inject(Router);
+    private achievementService = inject(AchievementService);
 
     columns = [
-        { label: 'Game', value: (a: Achievement) => a.game },
-        { label: 'Achievement', value: (a: Achievement) => a.name },
-        { label: 'Condition', value: (a: Achievement) => a.condition },
-        { label: 'Difficulty', value: (a: Achievement) => a.difficulty }
+        { label: 'Game', value: (achievement: Achievement) => achievement.game },
+        { label: 'Achievement', value: (achievement: Achievement) => achievement.name },
+        { label: 'Condition', value: (achievement: Achievement) => achievement.condition },
+        { label: 'Difficulty', value: (achievement: Achievement) => achievement.difficulty }
     ];
-
-    constructor(private achievementService: AchievementService) {
-        super();
-    }
 
     loadItems(): Observable<Achievement[]> {
         return this.achievementService.getAchievements();

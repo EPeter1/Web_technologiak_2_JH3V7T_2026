@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 
 import { createUserAchievementForm, PLATFORMS } from '../user-achievement-form.config';
 import { DataFormComponent } from '../data-form/data-form.component';
-import { ManageDataDirective } from '../../directives/manage-data.directive';
+import { FormErrorComponent } from '../form-error/form-error.component';
+import { ManageDataDirective } from '../../directives/manage-data/manage-data.directive';
 import { Achievement } from '../../models/achievement';
 import { User } from '../../models/user';
 import { AchievementService } from '../../services/achievement.service';
@@ -30,7 +31,8 @@ import { UserService } from '../../services/user.service';
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
-        DataFormComponent
+        DataFormComponent,
+        FormErrorComponent
     ],
     templateUrl: '../add-user-achievement/add-user-achievement.component.html',
     styleUrls: ['../add-styles.css']

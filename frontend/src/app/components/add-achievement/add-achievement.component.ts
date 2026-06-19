@@ -7,7 +7,8 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { createAchievementForm, DIFFICULTIES } from '../achievement-form.config';
 import { DataFormComponent } from '../data-form/data-form.component';
-import { ManageDataDirective } from '../../directives/manage-data.directive';
+import { FormErrorComponent } from '../form-error/form-error.component';
+import { ManageDataDirective } from '../../directives/manage-data/manage-data.directive';
 import { Achievement } from '../../models/achievement';
 import { AchievementService } from '../../services/achievement.service';
 import { NotificationService } from '../../services/notification.service';
@@ -20,7 +21,8 @@ import { NotificationService } from '../../services/notification.service';
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
-        DataFormComponent
+        DataFormComponent,
+        FormErrorComponent
     ],
     templateUrl: './add-achievement.component.html',
     styleUrls: ['../add-styles.css']

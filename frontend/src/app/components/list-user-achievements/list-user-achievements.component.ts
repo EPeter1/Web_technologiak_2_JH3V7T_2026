@@ -1,40 +1,37 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs';
 
+import { DataTableComponent } from '../data-table/data-table.component';
+import { ListDataDirective } from '../../directives/list-data/list-data.directive';
 import { UserAchievement } from '../../models/user-achievement';
 import { UserAchievementService } from '../../services/user-achievement.service';
-import { DataTableComponent } from '../data-table/data-table.component';
-import { ListDataComponent } from '../list-data/list-data.component';
 
 @Component({
     selector: 'app-list-user-achievements',
     standalone: true,
     imports: [
-        CommonModule,
+        AsyncPipe,
         FormsModule,
-        RouterModule,
         DataTableComponent
     ],
-    templateUrl: './list-user-achievements.component.html',
+    templateUrl: '../list-achievements/list-achievements.component.html',
     styleUrls: ['./list-user-achievements.component.css']
 })
 
-export class ListUserAchievementsComponent extends ListDataComponent<UserAchievement> {
+export class ListUserAchievementsComponent extends ListDataDirective<UserAchievement> {
     private router = inject(Router);
+    private userAchievementService = inject(UserAchievementService);
 
     columns = [
-        { label: 'User', value: (ua: UserAchievement) => ua.userId?.userName },
-        { label: 'Achievement', value: (ua: UserAchievement) => ua.achievementId?.name },
-        { label: 'Platform', value: (ua: UserAchievement) => ua.platform },
-        { label: 'Unlocked', value: (ua: UserAchievement) => ua.unlockedAt }
+        { label: 'User', value: (userAchievement: UserAchievement) => userAchievement.userId?.userName },
+        { label: 'Achievement', value: (userAchievement: UserAchievement) => userAchievement.achievementId?.name },
+        { label: 'Platform', value: (userAchievement: UserAchievement) => userAchievement.platform },
+        { label: 'Unlocked', value: (userAchievement: UserAchievement) => userAchievement.unlockedAt }
     ];
-
-    constructor(private userAchievementService: UserAchievementService) {
-        super();
-    }
 
     loadItems(): Observable<UserAchievement[]> {
         return this.userAchievementService.getUserAchievements()

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -13,14 +13,12 @@ import { AuthService } from '../../services/auth.service';
 })
 
 export class LoginComponent {
+    private router = inject(Router);
+    private authService = inject(AuthService);
+
     userName = '';
     password = '';
     errorMessage = signal('');
-
-    constructor(
-        private authService: AuthService,
-        private router: Router
-    ) {}
 
     login() {
         this.authService.login(this.userName, this.password).subscribe({

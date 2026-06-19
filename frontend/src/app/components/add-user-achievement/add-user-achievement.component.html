@@ -13,9 +13,7 @@
                 </mat-option>
             }
         </mat-select>
-        @if (dataForm.get('userId')?.touched && dataForm.get('userId')?.invalid) {
-            <mat-error>Required</mat-error>
-        }
+        <app-form-error [control]="dataForm.get('userId')"></app-form-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -27,9 +25,7 @@
                 </mat-option>
             }
         </mat-select>
-        @if (dataForm.get('achievementId')?.touched && dataForm.get('achievementId')?.invalid) {
-            <mat-error>Required</mat-error>
-        }
+        <app-form-error [control]="dataForm.get('achievementId')"></app-form-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">

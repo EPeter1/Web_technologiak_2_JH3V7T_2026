@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 type Column<Item> = {
     label: string;
@@ -16,6 +16,7 @@ type Column<Item> = {
 export class DataTableComponent<Item> {
     @Input() data: Item[] = [];
     @Input() columns: Column<Item>[] = [];
+    @Input() showEdit = true;
 
     @Output() edit = new EventEmitter<Item>();
     @Output() delete = new EventEmitter<Item>();

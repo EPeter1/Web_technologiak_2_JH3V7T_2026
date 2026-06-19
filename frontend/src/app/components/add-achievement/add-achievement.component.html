@@ -7,25 +7,19 @@
     <mat-form-field appearance="fill">
         <mat-label>Game</mat-label>
         <input matInput formControlName="game"/>
-        @if (dataForm.get('game')?.touched && dataForm.get('game')?.invalid) {
-            <mat-error>Required</mat-error>
-        }
+        <app-form-error [control]="dataForm.get('game')"></app-form-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Achievement name</mat-label>
         <input matInput formControlName="name"/>
-        @if (dataForm.get('name')?.touched && dataForm.get('name')?.invalid) {
-            <mat-error>Required</mat-error>
-        }
+        <app-form-error [control]="dataForm.get('name')"></app-form-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Condition</mat-label>
         <textarea matInput formControlName="condition"></textarea>
-        @if (dataForm.get('condition')?.touched && dataForm.get('condition')?.invalid) {
-            <mat-error>Required</mat-error>
-        }
+        <app-form-error [control]="dataForm.get('condition')"></app-form-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">

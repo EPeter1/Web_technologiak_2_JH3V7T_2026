@@ -1,10 +1,13 @@
 <h2>Data Management</h2>
 
-<select [value]="selectedView" (change)="onChange($event)">
-    <option value="achievements">Achievements</option>
-    <option value="users">Users</option>
-    <option value="userAchievements">User achievements</option>
-</select>
+<mat-form-field appearance="fill">
+    <mat-label>Select type</mat-label>
+    <mat-select [value]="selectedView" (selectionChange)="onTypeChange($event.value)">
+        <mat-option value="achievements">Achievements</mat-option>
+        <mat-option value="userAchievements">User achievements</mat-option>
+        <mat-option value="users">Users</mat-option>
+    </mat-select>
+</mat-form-field>
 
 <hr />
 
@@ -12,10 +15,10 @@
     @case ('achievements') {
         <app-list-achievements></app-list-achievements>
     }
-    @case ('users') {
-        <app-list-users></app-list-users>
-    }
     @case ('userAchievements') {
         <app-list-user-achievements></app-list-user-achievements>
+    }
+    @case ('users') {
+        <app-list-users></app-list-users>
     }
 }

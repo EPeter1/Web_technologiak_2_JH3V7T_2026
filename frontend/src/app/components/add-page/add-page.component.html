@@ -2,7 +2,7 @@
 
 <mat-form-field appearance="fill">
     <mat-label>Select type</mat-label>
-    <mat-select [value]="selectedView" (selectionChange)="onChange($event.value)">
+    <mat-select [value]="selectedView" (selectionChange)="onTypeChange($event.value)">
         <mat-option value="achievements">Achievement</mat-option>
         <mat-option value="userAchievements">User Achievement</mat-option>
     </mat-select>

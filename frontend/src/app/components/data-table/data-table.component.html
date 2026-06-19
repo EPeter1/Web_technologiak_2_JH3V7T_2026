@@ -19,7 +19,9 @@
                     </td>
                 }
                 <td>
-                    <button (click)="edit.emit(item)">Edit</button>
+                    @if (showEdit) {
+                        <button (click)="edit.emit(item)">Edit</button>
+                    }
                     <button (click)="delete.emit(item)">Delete</button>
                 </td>
             </tr>
