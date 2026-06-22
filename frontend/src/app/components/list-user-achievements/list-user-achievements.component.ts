@@ -1,8 +1,11 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 
 import { DataTableComponent } from '../data-table/data-table.component';
@@ -16,21 +19,29 @@ import { UserAchievementService } from '../../services/user-achievement.service'
     imports: [
         AsyncPipe,
         FormsModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
         DataTableComponent
     ],
     templateUrl: '../list-achievements/list-achievements.component.html',
-    styleUrls: ['./list-user-achievements.component.css']
+    styleUrls: ['../list-achievements/list-achievements.component.css']
 })
 
 export class ListUserAchievementsComponent extends ListDataDirective<UserAchievement> {
+    private datePipe = inject(DatePipe);
     private router = inject(Router);
     private userAchievementService = inject(UserAchievementService);
 
     columns = [
-        { label: 'User', value: (userAchievement: UserAchievement) => userAchievement.userId?.userName },
-        { label: 'Achievement', value: (userAchievement: UserAchievement) => userAchievement.achievementId?.name },
-        { label: 'Platform', value: (userAchievement: UserAchievement) => userAchievement.platform },
-        { label: 'Unlocked', value: (userAchievement: UserAchievement) => userAchievement.unlockedAt }
+        { key: 'user', label: 'User', value: (userAchievement: UserAchievement) => userAchievement.userId?.userName },
+        { key: 'achievement', label: 'Achievement', value: (userAchievement: UserAchievement) => userAchievement.achievementId?.name },
+        { key: 'platform', label: 'Platform', value: (userAchievement: UserAchievement) => userAchievement.platform },
+        {
+            key: 'unlocked',
+            label: 'Unlocked',
+            value: (userAchievement: UserAchievement) => this.datePipe.transform(userAchievement.unlockedAt, 'yyyy.MM.dd. HH:mm:ss')
+        }
     ];
 
     loadItems(): Observable<UserAchievement[]> {

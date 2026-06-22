@@ -1,0 +1,42 @@
+.login-container {
+    display: flex;
+    width: 100%;
+    min-height: 80vh;
+    align-items: center;
+    justify-content: center;
+}
+
+mat-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #1e2021;
+}
+
+.welcome-text {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.welcome-text h2 {
+    margin: 0 0 8px 0;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+mat-label {
+    font-size: 1.25rem;
+}
+
+mat-icon {
+    margin-right: 8px;
+    color: #757575;
+}
+
+.submit-button {
+    width: 100%;
+    font-size: 1.25rem;
+}

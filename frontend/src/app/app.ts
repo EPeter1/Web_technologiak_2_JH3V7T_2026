@@ -1,5 +1,7 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+
+import { MatButtonModule } from '@angular/material/button';
 
 import { AuthService } from './services/auth.service';
 
@@ -7,8 +9,10 @@ import { AuthService } from './services/auth.service';
     selector: 'app-root',
     standalone: true,
     imports: [
+        RouterLink,
+        RouterLinkActive,
         RouterOutlet,
-        RouterLink
+        MatButtonModule
     ],
     templateUrl: './app.html',
     styleUrls: ['./app.css']

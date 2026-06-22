@@ -3,6 +3,9 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 
 import { DataTableComponent } from '../data-table/data-table.component';
@@ -16,6 +19,9 @@ import { AchievementService } from '../../services/achievement.service';
     imports: [
         AsyncPipe,
         FormsModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
         DataTableComponent
     ],
     templateUrl: './list-achievements.component.html',
@@ -27,10 +33,10 @@ export class ListAchievementsComponent extends ListDataDirective<Achievement> {
     private achievementService = inject(AchievementService);
 
     columns = [
-        { label: 'Game', value: (achievement: Achievement) => achievement.game },
-        { label: 'Achievement', value: (achievement: Achievement) => achievement.name },
-        { label: 'Condition', value: (achievement: Achievement) => achievement.condition },
-        { label: 'Difficulty', value: (achievement: Achievement) => achievement.difficulty }
+        { key: 'user', label: 'Game', value: (achievement: Achievement) => achievement.game },
+        { key: 'achievement', label: 'Achievement', value: (achievement: Achievement) => achievement.name },
+        { key: 'condition', label: 'Condition', value: (achievement: Achievement) => achievement.condition },
+        { key: 'difficulty', label: 'Difficulty', value: (achievement: Achievement) => achievement.difficulty }
     ];
 
     loadItems(): Observable<Achievement[]> {

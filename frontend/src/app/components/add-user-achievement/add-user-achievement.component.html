@@ -4,7 +4,7 @@
     [formGroup]="dataForm"
     (formSubmit)="onSubmit()">
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Select User</mat-label>
         <mat-select formControlName="userId">
             @for (user of users$ | async; track user._id) {
@@ -13,10 +13,11 @@
                 </mat-option>
             }
         </mat-select>
-        <app-form-error [control]="dataForm.get('userId')"></app-form-error>
+
+        <mat-error app-form-error [control]="dataForm.get('userId')"></mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Select Achievement</mat-label>
         <mat-select formControlName="achievementId">
             @for (ach of achievements$ | async; track ach._id) {
@@ -25,10 +26,11 @@
                 </mat-option>
             }
         </mat-select>
-        <app-form-error [control]="dataForm.get('achievementId')"></app-form-error>
+
+        <mat-error app-form-error [control]="dataForm.get('achievementId')"></mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Platform</mat-label>
         <mat-select formControlName="platform">
             @for (p of platforms; track p) {
@@ -37,14 +39,15 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="unlockedDate">
+
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Time</mat-label>
         <input matInput type="time" step="1" formControlName="unlockedTime">
     </mat-form-field>

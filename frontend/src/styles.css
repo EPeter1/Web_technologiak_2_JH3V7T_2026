@@ -1,13 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 
+app-root {
+    display: block;
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 20px;
+    background-color: #4d5356;
+}
+
 .snackbar-success {
-    background-color: #2e7d32 !important;
-    color: white !important;
+    background-color: #2e7d32;
+    color: white;
     border-left: 6px solid #66bb6a;
 }
 
 .snackbar-error {
-    background-color: #c62828 !important;
-    color: white !important;
+    background-color: #c62828;
+    color: white;
     border-left: 6px solid #ef5350;
 }

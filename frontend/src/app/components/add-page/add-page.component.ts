@@ -21,7 +21,7 @@ type ViewType = 'achievements' | 'userAchievements';
         AddUserAchievementComponent
     ],
     templateUrl: './add-page.component.html',
-    styleUrls: ['./add-page.component.css']
+    styleUrls: ['../data-page/data-page.component.css']
 })
 
 export class AddPageComponent implements OnInit {

@@ -4,25 +4,25 @@
     [formGroup]="dataForm"
     (formSubmit)="onSubmit()">
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Game</mat-label>
         <input matInput formControlName="game"/>
-        <app-form-error [control]="dataForm.get('game')"></app-form-error>
+        <mat-error app-form-error [control]="dataForm.get('game')"></mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Achievement name</mat-label>
         <input matInput formControlName="name"/>
-        <app-form-error [control]="dataForm.get('name')"></app-form-error>
+        <mat-error app-form-error [control]="dataForm.get('name')"></mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Condition</mat-label>
         <textarea matInput formControlName="condition"></textarea>
-        <app-form-error [control]="dataForm.get('condition')"></app-form-error>
+        <mat-error app-form-error [control]="dataForm.get('condition')"></mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>Difficulty</mat-label>
         <mat-select formControlName="difficulty">
             @for (d of difficulties; track d) {

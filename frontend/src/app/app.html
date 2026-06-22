@@ -1,12 +1,12 @@
 <nav>
     @if (authService.isLoggedIn) {
-        <a routerLink="/data">Database</a>
-        <a routerLink="/add">Add Entry</a>
-        <a routerLink="/edit">Edit Entry</a>
-        <button (click)="authService.logout()">Log Out</button>
+        <a routerLink="/data" routerLinkActive="active-link">Database</a>
+        <a routerLink="/add" routerLinkActive="active-link">Add Entry</a>
+        <a routerLink="/edit" routerLinkActive="active-link">Edit Entry</a>
+        <button mat-stroked-button class="logout-button" (click)="authService.logout()">Log Out</button>
     }
     @else {
-        <a routerLink="/login">Log In</a>
+        <a routerLink="/login" routerLinkActive="active-link">Log In</a>
     }
 </nav>
 

@@ -2,6 +2,9 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 
 import { DataTableComponent } from '../data-table/data-table.component';
@@ -15,19 +18,22 @@ import { UserService } from '../../services/user.service';
     imports: [
         AsyncPipe,
         FormsModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
         DataTableComponent
     ],
     templateUrl: '../list-achievements/list-achievements.component.html',
-    styleUrls: ['./list-users.component.css']
+    styleUrls: ['../list-achievements/list-achievements.component.css']
 })
 
 export class ListUsersComponent extends ListDataDirective<User> {
     private userService = inject(UserService);
 
     columns = [
-        { label: 'Username', value: (user: User) => user.userName },
-        { label: 'Email', value: (user: User) => user.email },
-        { label: 'Role', value: (user: User) => user.role }
+        { key: 'username', label: 'Username', value: (user: User) => user.userName },
+        { key: 'email', label: 'Email', value: (user: User) => user.email },
+        { key: 'role', label: 'Role', value: (user: User) => user.role }
     ];
 
     loadItems(): Observable<User[]> {

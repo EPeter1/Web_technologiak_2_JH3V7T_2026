@@ -35,7 +35,7 @@ import { UserService } from '../../services/user.service';
         FormErrorComponent
     ],
     templateUrl: './add-user-achievement.component.html',
-    styleUrls: ['../add-styles.css']
+    styleUrls: ['../add-achievement/add-achievement.component.css']
 })
 
 export class AddUserAchievementComponent extends ManageDataDirective implements OnInit {

@@ -1,30 +1,38 @@
-<table>
-    <thead>
-        <tr>
-            @for (column of columns; track column) {
-                <th>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+        @for (column of columns; track column.key) {
+            <ng-container [matColumnDef]="column.key">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
                     {{ column.label }}
                 </th>
-            }
-            <th>Actions</th>
-        </tr>
-    </thead>
 
-    <tbody>
-        @for (item of data; track item) {
-            <tr>
-                @for (column of columns; track column) {
-                    <td>
-                        {{ column.value(item) }}
-                    </td>
-                }
-                <td>
-                    @if (showEdit) {
-                        <button (click)="edit.emit(item)">Edit</button>
-                    }
-                    <button (click)="delete.emit(item)">Delete</button>
+                <td mat-cell *matCellDef="let item">
+                    {{ column.value(item) }}
                 </td>
-            </tr>
+            </ng-container>
         }
-    </tbody>
-</table>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>
+                Actions
+            </th>
+
+            <td mat-cell *matCellDef="let item" class="actions-cell">
+                @if (showEdit) {
+                    <button mat-stroked-button color="primary" (click)="edit.emit(item)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit</span>
+                    </button>
+                }
+
+                <button mat-stroked-button color="warn" (click)="delete.emit(item)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

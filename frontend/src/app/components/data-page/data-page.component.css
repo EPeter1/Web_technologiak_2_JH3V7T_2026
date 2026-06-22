@@ -1,0 +1,33 @@
+.header-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.selection-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.selection-container mat-form-field {
+    width: 100%;
+}
+
+.search-container {
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.selection-button {
+    display: block;
+    margin: 20px auto 0;
+    text-align: center;
+}

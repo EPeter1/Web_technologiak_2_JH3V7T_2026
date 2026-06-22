@@ -1,25 +1,33 @@
 <div class="login-container">
-    <h2>Login</h2>
+    <mat-card>
+        <div class="welcome-text">
+            <h2>Welcome</h2>
+            <p>Sign in to continue</p>
+        </div>
 
-    <input
-        type="text"
-        placeholder="Username"
-        [(ngModel)]="userName"
-        (input)="onInputChange()"
-    />
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Username</mat-label>
+                <mat-icon matPrefix class="form-field-icon">person</mat-icon>
 
-    <input
-        type="password"
-        placeholder="Password"
-        [(ngModel)]="password"
-        (input)="onInputChange()"
-    />
+                <input matInput type="text" formControlName="userName" placeholder="Enter your username"/>
+                <mat-error app-form-error [control]="loginForm.get('userName')"></mat-error>
+            </mat-form-field>
 
-    <button (click)="login()">Login</button>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Password</mat-label>
+                <mat-icon matPrefix class="form-field-icon">lock</mat-icon>
 
-    @if (errorMessage() !== '') {
-        <p style="color: red">
-            {{ errorMessage() }}
-        </p>
-    }
+                <input matInput type="password" formControlName="password" placeholder="Enter your password"/>
+                <mat-error app-form-error [control]="loginForm.get('password')"></mat-error>
+                @if (loginForm.get('password')?.hasError('invalidCredentials')) {
+                    <mat-error>Wrong username or password</mat-error>
+                }
+            </mat-form-field>
+
+            <button mat-raised-button class="submit-button" type="submit" color="primary" [disabled]="loginForm.invalid">
+                Log in
+            </button>
+        </form>
+    </mat-card>
 </div>

@@ -1,0 +1,10 @@
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.search-field {
+    width: 100%;
+    max-width: 500px;
+}

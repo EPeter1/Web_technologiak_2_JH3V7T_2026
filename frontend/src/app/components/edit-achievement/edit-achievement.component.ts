@@ -25,7 +25,7 @@ import { NotificationService } from '../../services/notification.service';
         FormErrorComponent
     ],
     templateUrl: '../add-achievement/add-achievement.component.html',
-    styleUrls: ['../add-styles.css']
+    styleUrls: ['../add-achievement/add-achievement.component.css']
 })
 
 export class EditAchievementComponent extends ManageDataDirective implements OnChanges {

@@ -1,0 +1,8 @@
+mat-form-field {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+mat-label {
+    font-size: 1.25rem;
+}

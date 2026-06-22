@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -25,13 +26,14 @@ type ViewType = 'achievements' | 'userAchievements';
         FormsModule,
         MatButtonModule,
         MatFormFieldModule,
+        MatIconModule,
         MatInputModule,
         MatSelectModule,
         EditAchievementComponent,
         EditUserAchievementComponent
     ],
     templateUrl: './edit-page.component.html',
-    styleUrls: ['./edit-page.component.css']
+    styleUrls: ['../data-page/data-page.component.css']
 })
 
 export class EditPageComponent implements OnInit {

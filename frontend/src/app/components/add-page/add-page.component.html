@@ -1,12 +1,14 @@
-<h2>Add New Entry</h2>
+<div class="header-container">
+    <h2>Add New Entry</h2>
 
-<mat-form-field appearance="fill">
-    <mat-label>Select type</mat-label>
-    <mat-select [value]="selectedView" (selectionChange)="onTypeChange($event.value)">
-        <mat-option value="achievements">Achievement</mat-option>
-        <mat-option value="userAchievements">User Achievement</mat-option>
-    </mat-select>
-</mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Select type</mat-label>
+        <mat-select [value]="selectedView" (selectionChange)="onTypeChange($event.value)">
+            <mat-option value="achievements">Achievement</mat-option>
+            <mat-option value="userAchievements">User Achievement</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
 
 <hr />
 

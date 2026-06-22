@@ -1,13 +1,15 @@
-<h2>Data Management</h2>
+<div class="header-container">
+    <h2>Data Management</h2>
 
-<mat-form-field appearance="fill">
-    <mat-label>Select type</mat-label>
-    <mat-select [value]="selectedView" (selectionChange)="onTypeChange($event.value)">
-        <mat-option value="achievements">Achievements</mat-option>
-        <mat-option value="userAchievements">User achievements</mat-option>
-        <mat-option value="users">Users</mat-option>
-    </mat-select>
-</mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Select type</mat-label>
+        <mat-select [value]="selectedView" (selectionChange)="onTypeChange($event.value)">
+            <mat-option value="achievements">Achievements</mat-option>
+            <mat-option value="userAchievements">User Achievements</mat-option>
+            <mat-option value="users">Users</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
 
 <hr />
 
