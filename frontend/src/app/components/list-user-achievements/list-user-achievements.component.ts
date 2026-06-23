@@ -3,11 +3,13 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DataTableComponent } from '../data-table/data-table.component';
 import { ListDataDirective } from '../../directives/list-data/list-data.directive';
 import { UserAchievement } from '../../models/user-achievement';
@@ -31,6 +33,7 @@ import { UserAchievementService } from '../../services/user-achievement.service'
 export class ListUserAchievementsComponent extends ListDataDirective<UserAchievement> {
     private datePipe = inject(DatePipe);
     private router = inject(Router);
+    private dialog = inject(MatDialog);
     private userAchievementService = inject(UserAchievementService);
 
     columns = [
@@ -59,16 +62,23 @@ export class ListUserAchievementsComponent extends ListDataDirective<UserAchieve
             return;
         }
 
-        if (confirm('Delete user achievement?')) {
-            this.userAchievementService.deleteUserAchievement(userAchievement._id).subscribe(() => {
-                this.refresh();
-            });
-        }
+        const dialogReference = ConfirmDialogComponent.open(
+            this.dialog,
+            `${userAchievement.achievementId?.name} for ${userAchievement.userId?.userName}`
+        );
+
+        dialogReference.afterClosed().subscribe((confirmed) => {
+            if (confirmed === true) {
+                this.userAchievementService.deleteUserAchievement(userAchievement._id!).subscribe(() => {
+                    this.refresh();
+                });
+            }
+        });
     }
 
-    filterItem(ua: UserAchievement, term: string): boolean {
-        return ua.userId?.userName?.toLowerCase().includes(term) ||
-            ua.achievementId?.name?.toLowerCase().includes(term) ||
-            ua.platform?.toLowerCase().includes(term);
+    filterItem(userAchievement: UserAchievement, term: string): boolean {
+        return userAchievement.userId?.userName?.toLowerCase().includes(term) ||
+            userAchievement.achievementId?.name?.toLowerCase().includes(term) ||
+            userAchievement.platform?.toLowerCase().includes(term);
     }
 }

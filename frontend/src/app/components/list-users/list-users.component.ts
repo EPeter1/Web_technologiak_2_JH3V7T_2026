@@ -2,11 +2,13 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DataTableComponent } from '../data-table/data-table.component';
 import { ListDataDirective } from '../../directives/list-data/list-data.directive';
 import { User } from '../../models/user';
@@ -28,6 +30,7 @@ import { UserService } from '../../services/user.service';
 })
 
 export class ListUsersComponent extends ListDataDirective<User> {
+    private dialog = inject(MatDialog);
     private userService = inject(UserService);
 
     columns = [
@@ -48,11 +51,15 @@ export class ListUsersComponent extends ListDataDirective<User> {
             return;
         }
 
-        if (confirm('Delete user?')) {
-            this.userService.deleteUser(user._id).subscribe(() => {
-                this.refresh();
-            });
-        }
+        const dialogReference = ConfirmDialogComponent.open(this.dialog, user.userName);
+
+        dialogReference.afterClosed().subscribe((confirmed) => {
+            if (confirmed === true) {
+                this.userService.deleteUser(user._id!).subscribe(() => {
+                    this.refresh();
+                });
+            }
+        });
     }
 
     filterItem(user: User, term: string): boolean {

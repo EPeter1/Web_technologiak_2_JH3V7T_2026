@@ -3,11 +3,13 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DataTableComponent } from '../data-table/data-table.component';
 import { ListDataDirective } from '../../directives/list-data/list-data.directive';
 import { Achievement } from '../../models/achievement';
@@ -30,6 +32,7 @@ import { AchievementService } from '../../services/achievement.service';
 
 export class ListAchievementsComponent extends ListDataDirective<Achievement> {
     private router = inject(Router);
+    private dialog = inject(MatDialog);
     private achievementService = inject(AchievementService);
 
     columns = [
@@ -53,12 +56,16 @@ export class ListAchievementsComponent extends ListDataDirective<Achievement> {
         if (!achievement._id) {
             return;
         }
-        
-        if (confirm('Delete achievement?')) {
-            this.achievementService.deleteAchievement(achievement._id).subscribe(() => {
-                this.refresh();
-            });
-        }
+
+        const dialogReference = ConfirmDialogComponent.open(this.dialog, achievement.name);
+
+        dialogReference.afterClosed().subscribe((confirmed) => {
+            if (confirmed === true) {
+                this.achievementService.deleteAchievement(achievement._id!).subscribe(() => {
+                    this.refresh();
+                });
+            }
+        });
     }
 
     filterItem(achievement: Achievement, term: string): boolean {

@@ -1,0 +1,19 @@
+.dialog-container {
+    padding: 10px;
+    text-align: center;
+}
+
+[mat-dialog-title] {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+mat-dialog-actions button {
+    min-width: 100px;
+    margin: 0 8px;
+}
+
+.delete-button {
+    color: #f44336;
+}
